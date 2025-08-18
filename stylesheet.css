@@ -1,0 +1,9 @@
+button {
+    cursor: pointer;
+}
+
+#output {
+    border: 2px solid gray;
+    padding: 5px;
+    width: 80px;
+}
