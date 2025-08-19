@@ -42,23 +42,45 @@ function displayCalculation() {
 
 // basic arithmetic function on two numbers
 function calculateResult() {
-	let result;
+    checkFirstEl();
 
-	const val1 = Number(calculation[0]);
-	const val2 = Number(calculation[2]);
-	const oper = calculation[1];
+	const operations = ["*", "/", "+", "-"];
 
-	if (oper === "+") {
-		result = val1 + val2;
-	} else if (oper === "-") {
-		result = val1 - val2;
-	} else if (oper === "*") {
-		result = val1 * val2;
-	} else {
-		result = val1 / val2;
+	for (let i = 0; i < 4; i++) {
+		for (let j = 0; j < calculation.length; j++) {
+			if (calculation[j] === operations[i]) {
+				const num1 = Number(calculation[j - 1]);
+				const num2 = Number(calculation[j + 1]);
+
+				const result = performOperation(num1, operations[i], num2);
+				calculation.splice(j - 1, 3, result);
+                j--;
+			}
+		}
 	}
 
-	output.innerHTML = result;
+	output.innerHTML = calculation;
+}
+
+function checkFirstEl() {
+    if (calculation[0] === "-") {
+        negNum = "-" + calculation[1];
+        calculation.splice(0, 2, negNum)
+    }
+}
+
+
+function performOperation(num1, operator, num2) {
+	const operations = {
+		"*": (a, b) => a * b,
+		"/": (a, b) => a / b,
+		"+": (a, b) => a + b,
+		"-": (a, b) => a - b,
+	};
+
+	if (operations[operator]) {
+		return operations[operator](num1, num2);
+	}
 }
 
 function resetCalc() {
