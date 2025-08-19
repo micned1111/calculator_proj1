@@ -1,74 +1,66 @@
-const numbers = document.querySelector(".numbers");
-const operations = document.querySelector(".operations");
+const numberButtons = document.querySelector(".numbers");
+const operationButtons = document.querySelector(".operations");
 
-const calc = document.getElementById("calculate");
-const reset = document.getElementById("reset");
+const calculateButton = document.getElementById("calculate");
+const resetButton = document.getElementById("reset");
 
 let output = document.getElementById("output");
 
-let calculation = [];
-let lastEl = false; // false == not a number, true == number
+let expression = []; // array containing numbers and operators
+let isLastElementNumber = false; // false == not a number, true == number
 
 function addNumber(event) {
-	const val = event.target.value;
+	const numberVal = event.target.value;
 
-	if (lastEl === false) {
-		calculation.push(val);
-		lastEl = true;
+	if (isLastElementNumber === false) {
+		if (expression.length === 1) {
+			expression[0] = "-" + numberVal;
+		}
+        else {
+            expression.push(numberVal);
+        }
+		isLastElementNumber = true;
 	} else {
-		let last = calculation.pop();
-		last += val;
-		calculation.push(last);
+		expression.push(expression.pop() + numberVal);
 	}
 
-	displayCalculation();
+	displayExpression();
 }
 
 function addOperation(event) {
 	const operation = event.target.value;
-	calculation.push(operation);
-	lastEl = false;
+	expression.push(operation);
+	isLastElementNumber = false;
 
-	displayCalculation();
+	displayExpression();
 }
 
-function displayCalculation() {
-	let display = "";
-	for (const element of calculation) {
-		display += element + " ";
+function displayExpression() {
+	let stringExpression = "";
+	for (const element of expression) {
+		stringExpression += element + " ";
 	}
-	output.innerHTML = display;
+	output.innerHTML = stringExpression;
 }
 
-// basic arithmetic function on two numbers
-function calculateResult() {
-    checkFirstEl();
-
+function calculateExpression() {
 	const operations = ["*", "/", "+", "-"];
 
 	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < calculation.length; j++) {
-			if (calculation[j] === operations[i]) {
-				const num1 = Number(calculation[j - 1]);
-				const num2 = Number(calculation[j + 1]);
+		for (let j = 1; j < expression.length; j += 2) {
+			if (expression[j] === operations[i]) {
+				const num1 = Number(expression[j - 1]);
+				const num2 = Number(expression[j + 1]);
 
 				const result = performOperation(num1, operations[i], num2);
-				calculation.splice(j - 1, 3, result);
-                j--;
+				expression.splice(j - 1, 3, result);
+				j--;
 			}
 		}
 	}
 
-	output.innerHTML = calculation;
+	output.innerHTML = expression;
 }
-
-function checkFirstEl() {
-    if (calculation[0] === "-") {
-        negNum = "-" + calculation[1];
-        calculation.splice(0, 2, negNum)
-    }
-}
-
 
 function performOperation(num1, operator, num2) {
 	const operations = {
@@ -83,14 +75,14 @@ function performOperation(num1, operator, num2) {
 	}
 }
 
-function resetCalc() {
+function resetExpression() {
 	output.innerHTML = "";
-	calculation = [];
-	lastEl = false;
+	expression = [];
+	isLastElementNumber = false;
 }
 
-numbers.addEventListener("click", addNumber);
-operations.addEventListener("click", addOperation);
+numberButtons.addEventListener("click", addNumber);
+operationButtons.addEventListener("click", addOperation);
 
-calc.addEventListener("click", calculateResult);
-reset.addEventListener("click", resetCalc);
+calculateButton.addEventListener("click", calculateExpression);
+resetButton.addEventListener("click", resetExpression);
