@@ -1,27 +1,26 @@
 const numberButtons = document.querySelector(".numbers");
 const operationButtons = document.querySelector(".operations");
-
 const calculateButton = document.getElementById("calculate");
 const deleteButton = document.getElementById("delete");
 const resetButton = document.getElementById("reset");
-
 let output = document.getElementById("output");
 
 let expression = []; // array containing numbers and operators
-let isLastElementNumber = false; // false == not a number, true == number
+let currentInput = ""; // variable containing the current number-input
 
 function addNumber(event) {
 	const numberVal = event.target.value;
 
-	if (isLastElementNumber === false) {
-		if (expression.length === 1) {
-			expression[0] = "-" + numberVal;
+	if (numberVal === "0") {
+		if (currentInput === "-") {
+			currentInput = numberVal;
 		} else {
-			expression.push(numberVal);
+			if (currentInput === "") {
+				currentInput += numberVal;
+			}
 		}
-		isLastElementNumber = true;
 	} else {
-		expression.push(expression.pop() + numberVal);
+		currentInput += numberVal;
 	}
 
 	displayExpression();
@@ -29,37 +28,53 @@ function addNumber(event) {
 
 function addOperation(event) {
 	const operation = event.target.value;
-	expression.push(operation);
-	isLastElementNumber = false;
+
+	if (expression.length === 0 && currentInput === "") {
+		if (operation === "-") {
+			currentInput = operation;
+		}
+	} else {
+		if (currentInput !== "") {
+			expression.push(Number(currentInput));
+			currentInput = "";
+			expression.push(operation);
+		}
+	}
 
 	displayExpression();
 }
 
 function displayExpression() {
-	let stringExpression = "";
-	for (const element of expression) {
-		stringExpression += element + " ";
-	}
-	output.innerHTML = stringExpression;
+	output.innerHTML = expression.join(" ") + " " + currentInput;
 }
 
 function calculateExpression() {
-	const operations = ["*", "/", "+", "-"];
+	if (currentInput !== "") {
+		expression.push(Number(currentInput));
+		const operations = ["*", "/", "+", "-"];
 
-	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < expression.length; j++) {
-			if (expression[j] === operations[i]) {
-				const num1 = Number(expression[j - 1]);
-				const num2 = Number(expression[j + 1]);
+		for (let i = 0; i < 4; i += 2) {
+			for (let j = 1; j < expression.length; j += 2) {
+				if (
+					expression[j] === operations[i] ||
+					expression[j] === operations[i + 1]
+				) {
+					const num1 = expression[j - 1];
+					const num2 = expression[j + 1];
+					const oper = expression[j];
 
-				const result = performOperation(num1, operations[i], num2);
-				expression.splice(j - 1, 3, result);
-				j--;
+					const result = performOperation(num1, oper, num2);
+					expression.splice(j - 1, 3, result);
+					j -= 2;
+				}
 			}
 		}
-	}
 
-	output.innerHTML = expression;
+		output.innerHTML = expression;
+		currentInput = String(expression);
+		expression = [];
+		handleIssues();
+	}
 }
 
 function performOperation(num1, operator, num2) {
@@ -75,34 +90,33 @@ function performOperation(num1, operator, num2) {
 	}
 }
 
-function deleteLastElement() {
-    const lastElement = expression.pop();
-
-	if (Number(lastElement)) {
-		if (lastElement < 10) {
-            isLastElementNumber = false;
-		} else {
-			// the removed element was a multi-digit number
-			const newNumber = Math.floor(lastElement / 10);
-            expression.push(newNumber);
-            isLastElementNumber = true;
-		}
-	} else {
-        isLastElementNumber = true;
+function handleIssues() {
+	if (currentInput === "Infinity") {
+		currentInput = "";
 	}
-    
-    displayExpression();
+}
+
+function deleteLastElement() {
+	if (currentInput !== "") {
+		currentInput = currentInput.slice(0, -1);
+	} else {
+		if (expression.length !== 0) {
+			expression.pop();
+			currentInput = expression.pop();
+		}
+	}
+
+	displayExpression();
 }
 
 function resetExpression() {
 	output.innerHTML = "";
+	currentInput = "";
 	expression = [];
-	isLastElementNumber = false;
 }
 
 numberButtons.addEventListener("click", addNumber);
 operationButtons.addEventListener("click", addOperation);
-
 calculateButton.addEventListener("click", calculateExpression);
 deleteButton.addEventListener("click", deleteLastElement);
 resetButton.addEventListener("click", resetExpression);
