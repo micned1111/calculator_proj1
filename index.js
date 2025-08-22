@@ -15,7 +15,7 @@ function addNumber(event) {
 		if (currentInput === "-") {
 			currentInput = numberVal;
 		} else {
-			if (currentInput === "") {
+			if (currentInput !== "0") {
 				currentInput += numberVal;
 			}
 		}
@@ -64,6 +64,12 @@ function calculateExpression() {
 					const oper = expression[j];
 
 					const result = performOperation(num1, oper, num2);
+
+					if (Number.isNaN(result) || !Number.isFinite(result)) {
+						handleError();
+						return;
+					}
+
 					expression.splice(j - 1, 3, result);
 					j -= 2;
 				}
@@ -73,7 +79,6 @@ function calculateExpression() {
 		output.innerHTML = expression;
 		currentInput = String(expression);
 		expression = [];
-		handleIssues();
 	}
 }
 
@@ -90,10 +95,10 @@ function performOperation(num1, operator, num2) {
 	}
 }
 
-function handleIssues() {
-	if (currentInput === "Infinity") {
-		currentInput = "";
-	}
+function handleError() {
+	output.innerHTML = "Error";
+	currentInput = "";
+	expression = [];
 }
 
 function deleteLastElement() {
