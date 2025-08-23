@@ -1,5 +1,5 @@
-const numberButtons = document.querySelector(".numbers");
-const operationButtons = document.querySelector(".operations");
+const numberButtons = document.querySelectorAll("#number");
+const operationButtons = document.querySelectorAll("#operator");
 const calculateButton = document.getElementById("calculate");
 const deleteButton = document.getElementById("delete");
 const resetButton = document.getElementById("reset");
@@ -45,13 +45,13 @@ function addOperation(event) {
 }
 
 function displayExpression() {
-	output.innerHTML = expression.join(" ") + " " + currentInput;
+	output.innerText = expression.join(" ") + " " + currentInput;
 }
 
 function calculateExpression() {
 	if (currentInput !== "") {
 		expression.push(Number(currentInput));
-		const operations = ["*", "/", "+", "-"];
+		const operations = ["×", "÷", "+", "-"];
 
 		for (let i = 0; i < 4; i += 2) {
 			for (let j = 1; j < expression.length; j += 2) {
@@ -76,7 +76,7 @@ function calculateExpression() {
 			}
 		}
 
-		output.innerHTML = expression;
+		output.innerText = expression;
 		currentInput = String(expression);
 		expression = [];
 	}
@@ -84,8 +84,8 @@ function calculateExpression() {
 
 function performOperation(num1, operator, num2) {
 	const operations = {
-		"*": (a, b) => a * b,
-		"/": (a, b) => a / b,
+		"×": (a, b) => a * b,
+		"÷": (a, b) => a / b,
 		"+": (a, b) => a + b,
 		"-": (a, b) => a - b,
 	};
@@ -96,7 +96,7 @@ function performOperation(num1, operator, num2) {
 }
 
 function handleError() {
-	output.innerHTML = "Error";
+	output.innerText = "Error";
 	currentInput = "";
 	expression = [];
 }
@@ -115,13 +115,19 @@ function deleteLastElement() {
 }
 
 function resetExpression() {
-	output.innerHTML = "";
+	output.innerText = "";
 	currentInput = "";
 	expression = [];
 }
 
-numberButtons.addEventListener("click", addNumber);
-operationButtons.addEventListener("click", addOperation);
+numberButtons.forEach(button => {
+    button.addEventListener("click", addNumber)
+});
+
+operationButtons.forEach(button => {
+    button.addEventListener("click", addOperation)
+});
+
 calculateButton.addEventListener("click", calculateExpression);
 deleteButton.addEventListener("click", deleteLastElement);
 resetButton.addEventListener("click", resetExpression);

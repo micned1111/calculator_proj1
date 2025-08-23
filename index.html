@@ -6,46 +6,50 @@
 		<link rel="stylesheet" href="stylesheet.css" />
 	</head>
 	<body>
-		<h1>Calculator</h1>
+		<div class="calculator-container">
+			<div class="output-container">
+				<p id="output"></p>
+			</div>
 
-		<p id="output"></p>
+			<div class="buttons-container">
+				<div class="buttons-first-col">
+					<div class="buttons-first-row">
+						<button id="number" value="7">7</button>
+						<button id="number" value="8">8</button>
+						<button id="number" value="9">9</button>
+					</div>
 
-		<div class="numbers">
-			<button value="7">7</button>
-			<button value="8">8</button>
-			<button value="9">9</button>
+					<div class="buttons-second-row">
+						<button id="number" value="4">4</button>
+						<button id="number" value="5">5</button>
+						<button id="number" value="6">6</button>
+					</div>
 
-			<br />
+					<div class="buttons-third-row">
+						<button id="number" value="1">1</button>
+						<button id="number" value="2">2</button>
+						<button id="number" value="3">3</button>
+					</div>
 
-			<button value="4">4</button>
-			<button value="5">5</button>
-			<button value="6">6</button>
+					<div class="buttons-fourth-row">
+						<button id="number" value="0">0</button>
+						<button id="calculate">=</button>
+						<button id="delete">CE</button>
+					</div>
+				</div>
 
-			<br />
+				<div class="buttons-second-col">
+					<button id="operator" value="+">+</button>
+					<button id="operator" value="-">-</button>
+					<button id="operator" value="×">×</button>
+					<button id="operator" value="÷">÷</button>
+				</div>
+			</div>
 
-			<button value="1">1</button>
-			<button value="2">2</button>
-			<button value="3">3</button>
-
-			<br />
-
-			<button value="0">0</button>
+			<div>
+				<button id="reset">RESET</button>
+			</div>
 		</div>
-
-		<br />
-
-		<div class="operations">
-			<button value="+">+</button>
-			<button value="-">-</button>
-			<button value="*">*</button>
-			<button value="/">/</button>
-		</div>
-
-		<br />
-
-		<button id="calculate">=</button>
-        <button id="delete">CE</button>
-		<button id="reset">Reset</button>
 
 		<script src="index.js"></script>
 	</body>

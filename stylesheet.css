@@ -1,10 +1,89 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(232, 241, 248);
+}
+
 button {
-    cursor: pointer;
+    color: aliceblue;
+	background-color: #5d8aa8;
+    border: 2.5px solid rgb(40, 33, 78);
+	cursor: pointer;
+	width: 50px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 30px;
+}
+
+.calculator-container {
+    background-color: #426b86;
+    margin: 50px 50px 0 50px;
+    border: 5px solid rgb(40, 33, 78);
+    width: 350px;
+    height: 470px;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.output-container {
+    background-color: #8F9779;
+    border: 2px solid rgb(40, 33, 78);
+    margin: 40px 0 20px 0;
+    width: 300px;
+    height: 45px;
+    text-align: end;
+    font-size: 33px;
+}
+
+.buttons-container {
+    height: 275px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.buttons-first-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 250px;
+    width: 175px;
+}
+
+.buttons-second-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 250px;
+}
+
+.buttons-first-row,
+.buttons-second-row,
+.buttons-third-row,
+.buttons-fourth-row {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
 
 #output {
-    border: 2px solid gray;
-    padding: 5px;
-    width: 80px;
-    height: 15px;
+    margin: 4px 6px 0 0;
+}
+
+#operand {
+	font-size: 1.9rem;
+}
+
+#delete {
+	background-color: orangered;
+    font-size: 25px;
+}
+
+#reset {
+	width: 100px;
+    font-size: 25px;
 }
