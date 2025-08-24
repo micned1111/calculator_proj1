@@ -29,18 +29,19 @@ function addNumber(event) {
 function addOperation(event) {
 	const operation = event.target.value;
 
-	if (expression.length === 0 && currentInput === "") {
+	if (currentInput === "") {
 		if (operation === "-") {
 			currentInput = operation;
 		}
 	} else {
-		if (currentInput !== "") {
+		if (currentInput !== "" && !isNaN(currentInput)) {
 			expression.push(Number(currentInput));
 			currentInput = "";
 			expression.push(operation);
 		}
 	}
 
+    console.log(currentInput)
 	displayExpression();
 }
 
@@ -49,7 +50,7 @@ function displayExpression() {
 }
 
 function calculateExpression() {
-	if (currentInput !== "") {
+	if (currentInput !== "" && currentInput !=="-") {
 		expression.push(Number(currentInput));
 		const operations = ["×", "÷", "+", "-"];
 
@@ -91,7 +92,7 @@ function performOperation(num1, operator, num2) {
 	};
 
 	if (operations[operator]) {
-		return operations[operator](num1, num2);
+		return parseFloat((operations[operator](num1, num2)).toFixed(2));
 	}
 }
 
