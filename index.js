@@ -107,7 +107,7 @@ function deleteLastElement() {
 	} else {
 		if (expression.length !== 0) {
 			expression.pop();
-			currentInput = expression.pop();
+			currentInput = String(expression.pop());
 		}
 	}
 

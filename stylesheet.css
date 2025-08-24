@@ -1,89 +1,97 @@
-body {
-	font-family: Arial, Helvetica, sans-serif;
-	color: rgb(232, 241, 248);
-}
+:root {
+    --calculator-color: #426b86;
+    --border-color: rgb(40, 33, 78);
+    --buttons-primary-color: #5d8aa8;
+    --buttons-secondary-color: #6e99b6;
+  }
 
 button {
-    color: aliceblue;
-	background-color: #5d8aa8;
-    border: 2.5px solid rgb(40, 33, 78);
+	color: aliceblue;
+	background-color: var(--buttons-primary-color);
+	border: 2.5px solid var(--border-color);
+    border-radius: 10px;
 	cursor: pointer;
 	width: 50px;
 	height: 50px;
-	border-radius: 10px;
 	font-size: 30px;
 }
 
+button:hover {
+	background-color: var(--buttons-secondary-color);
+}
+
 .calculator-container {
-    background-color: #426b86;
-    margin: 50px 50px 0 50px;
-    border: 5px solid rgb(40, 33, 78);
-    width: 350px;
-    height: 470px;
-    border-radius: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	background-color: var(--calculator-color);
+	margin: 50px 50px 0 50px;
+	border: 5px solid var(--border-color);
+	border-radius: 50px;
+	width: 350px;
+	height: 470px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .output-container {
-    background-color: #8F9779;
-    border: 2px solid rgb(40, 33, 78);
-    margin: 40px 0 20px 0;
-    width: 300px;
-    height: 45px;
+    background-color: #8f9779;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
     text-align: end;
-    font-size: 33px;
+	font-size: 33px;
+	border: 2px solid var(--border-color);
+	margin: 40px 0 20px 0;
+	width: 300px;
+	height: 45px;
 }
 
 .buttons-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+    width: 75%;
     height: 275px;
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
 }
 
 .buttons-first-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
     width: 175px;
+	height: 250px;
 }
 
 .buttons-second-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 250px;
 }
 
-.buttons-first-row,
-.buttons-second-row,
-.buttons-third-row,
-.buttons-fourth-row {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+.numbers-first-row,
+.numbers-second-row,
+.numbers-third-row,
+.numbers-fourth-row {
+	display: flex;
+	flex-direction: row;
     justify-content: space-around;
+	align-items: center;
+    width: 100%;
 }
 
 #output {
-    margin: 4px 6px 0 0;
-}
-
-#operand {
-	font-size: 1.9rem;
+	margin: 4px 6px 0 0;
 }
 
 #delete {
 	background-color: orangered;
-    font-size: 25px;
+	font-size: 25px;
+}
+
+#delete:hover {
+	background-color: rgb(249, 97, 42);
 }
 
 #reset {
 	width: 100px;
-    font-size: 25px;
+	font-size: 23px;
 }
